@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eitelmann.de</title>
     <style>
-        /* Bauhaus-Raster-Variablen */
+        /* Optimierte Bauhaus-Raster-Variablen */
         :root {
-            --bg-color: #cccccc;    
-            --text-main: #000000;
-            --text-muted: #333333;  
-            --accent-blue: #2980b9; 
-            --grid-color: #e0e0e0;  
+            --bg-color: #2c2c2c;    
+            --text-main: #ffffff;   
+            --text-muted: #aaaaaa;  
+            --accent-blue: #3498db; 
+            --accent-red: #e74c3c;  /* Typisches Bauhaus-Rot */
+            --grid-color: #383838;  
             --grid-size: 40px;      
         }
 
@@ -22,7 +23,7 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
             background-color: var(--bg-color);
             color: var(--text-main);
             min-height: 100vh;
@@ -51,32 +52,63 @@
             pointer-events: none;
         }
 
+        /* Vertikale Konstruktionslinie auf der linken Rasterachse */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: calc(var(--grid-size) * 2);
+            width: 2px;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Rotes Bauhaus-Quadrat: Exakt um ein Raster (var(--grid-size)) nach links verschoben */
+        .bauhaus-cube {
+            position: absolute;
+            top: calc(var(--grid-size) * 3); /* Gleiche Startlinie wie das Logo */
+            right: calc(var(--grid-size) * 3); /* Von *2 auf *3 erhöht -> wandert ein Raster nach links */
+            width: calc(var(--grid-size) * 2);  
+            height: calc(var(--grid-size) * 2); 
+            background-color: var(--accent-red);
+            z-index: 2;
+        }
+
+        /* Alle Inhaltsblöcke halten exakt ein Raster Abstand zur Linie */
         header, main, footer {
             position: relative;
             z-index: 2;
-            width: 100%;
+            width: calc(100% - var(--grid-size));
+            margin-left: var(--grid-size); 
         }
 
-        /* Header: Exakt 3cm nach unten versetzt */
+        /* Header */
         header {
             margin-top: calc(var(--grid-size) * 3);
             height: calc(var(--grid-size) * 2); 
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
         }
 
         .logo {
-            font-size: 4.8rem;
-            font-weight: 700;
-            letter-spacing: -2px;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 5.2rem; 
+            font-weight: 900; 
+            letter-spacing: 5px; 
             color: var(--accent-blue);
             line-height: calc(var(--grid-size) * 2); 
             text-transform: lowercase;
-            margin-left: -5px; 
+            margin-left: -2px; 
+            text-shadow: 0 0 15px rgba(52, 152, 219, 0.35); 
         }
 
         /* Hauptinhalt / Kontaktbereich */
         main {
             margin-top: auto; 
-            margin-bottom: calc(var(--grid-size) * 2); 
+            margin-bottom: calc(var(--grid-size) * 3.5); 
             border-top: 2px solid var(--text-main); 
         }
 
@@ -87,8 +119,9 @@
         }
 
         h2 {
-            font-size: 1.8rem;
+            font-size: 1.1rem;
             font-weight: 700;
+            letter-spacing: 0.5px;
             color: var(--text-main);
             text-transform: lowercase;
             line-height: var(--grid-size);
@@ -109,13 +142,27 @@
             line-height: var(--grid-size);
         }
 
-        /* Footer mit Trennlinie ganz unten */
+        .email a {
+            color: inherit;
+            text-decoration: none;
+            transition: background 0.1s ease;
+            padding: 2px 6px;
+            margin-left: -6px;
+        }
+
+        .email a:hover {
+            color: #ffffff;
+            background: var(--accent-red);
+        }
+
+        /* Footer mit Trennlinie */
         footer {
             border-top: 1px solid var(--text-main); 
             height: var(--grid-size);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-bottom: calc(var(--grid-size) * 1.5); 
         }
 
         .copyright {
@@ -132,26 +179,28 @@
             text-decoration: none;
             font-weight: 500;
             cursor: pointer;
+            padding: 2px 6px;
         }
 
         .legal-links a:hover {
-            color: var(--accent-blue);
+            color: #000000;
+            background: var(--text-main);
         }
 
-        /* STYLING FÜR DAS DATENSCHUTZ-FENSTER (MODAL) */
+        /* STYLING FÜR DAS DATENSCHUTZ-FENSTER */
         dialog {
             margin: auto;
             padding: 30px;
             max-width: 600px;
             border: 2px solid var(--text-main);
-            background: #ffffff;
-            color: #000000;
+            background: #222222; 
+            color: #ffffff;      
             font-family: inherit;
-            box-shadow: 10px 10px 0px rgba(0,0,0,0.15);
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
         }
 
         dialog::backdrop {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.7);
         }
 
         dialog h3 {
@@ -165,11 +214,12 @@
             margin-top: 20px;
             margin-bottom: 5px;
             text-transform: lowercase;
+            color: var(--accent-blue);
         }
 
         dialog p, dialog ul {
             font-size: 0.95rem;
-            color: #222;
+            color: #dddddd;
             line-height: 1.5;
             margin-bottom: 10px;
         }
@@ -182,7 +232,7 @@
             margin-top: 25px;
             padding: 8px 16px;
             background: var(--text-main);
-            color: #fff;
+            color: var(--bg-color); 
             border: none;
             font-weight: 700;
             cursor: pointer;
@@ -190,7 +240,8 @@
         }
 
         dialog button:hover {
-            background: var(--accent-blue);
+            background: var(--accent-red);
+            color: #ffffff;
         }
 
         @media (max-width: 768px) {
@@ -203,19 +254,30 @@
                 padding-right: var(--grid-size);
             }
 
-            header {
-                margin-top: calc(var(--grid-size) * 3);
+            body::after {
+                left: var(--grid-size);
+            }
+
+            .bauhaus-cube {
+                top: calc(var(--grid-size) * 3);
+                right: calc(var(--grid-size) * 2); /* Mobil leicht angepasst für kleine Displays */
+                width: calc(var(--grid-size) * 2);
                 height: calc(var(--grid-size) * 2);
             }
 
+            header, main, footer {
+                width: calc(100% - var(--grid-size));
+                margin-left: var(--grid-size);
+            }
+
             .logo {
-                font-size: 3.2rem;
-                letter-spacing: -1px;
-                margin-left: -3px;
+                font-size: 3.6rem; 
+                letter-spacing: 2px; 
+                margin-left: -1px;
                 line-height: calc(var(--grid-size) * 2);
             }
 
-            h2 { font-size: 1.4rem; }
+            h2 { font-size: 1rem; }
             .subtext { font-size: 1.05rem; }
             .email { font-size: 1rem; }
             
@@ -228,8 +290,11 @@
 </head>
 <body>
 
+    <!-- Das verschobene Highlight im Bauhaus-Stil -->
+    <div class="bauhaus-cube"></div>
+
     <header>
-        <div class="logo">eitelmann.de</div>
+        <div class="logo">eitelmann</div>
     </header>
 
     <main>
@@ -240,12 +305,11 @@
             <p class="subtext">fragen? einfach nur hallo?</p>
         </div>
         <div class="grid-row">
-            <p class="email">hello (at) eitelmann.de</p>
+            <p class="email"><a href="mailto:hello@eitelmann.de">hello (at) eitelmann.de</a></p>
         </div>
     </main>
 
     <footer>
-        <!-- Das Jahr wird hier automatisch durch das Skript eingefügt -->
         <div class="copyright">eitelmann.de &copy; <span id="year"></span></div>
         <div class="legal-links">
             <a onclick="document.getElementById('privacy-modal').showModal()">datenschutz</a>
@@ -260,21 +324,4 @@
         
         <h4>2. Hosting und Server-Log-Files</h4>
         <p>Diese Webseite wird extern gehostet bei: <strong>GitHub Pages</strong> (GitHub Inc., 88 Colin P. Kelly Jr. St, San Francisco, CA 94107, USA).</p>
-        <p>Beim Aufruf dieser Webseite erfasst GitHub automatisch Informationen in sogenannten Server-Log-Files (u.a. Ihre IP-Adresse, Browsertyp, Betriebssystem und Uhrzeit). Dies ist technisch erforderlich, um die Seite stabil und sicher bereitzustellen (Art. 6 Abs. 1 lit. f DSGVO). Die Datenübertragung in die USA ist über die EU-Standardvertragsklauseln datenschutzrechtlich abgesichert.</p>
-        
-        <h4>3. Cookies & Tracking</h4>
-        <p>Diese Webseite ist rein privat. Sie verwendet keine eigenen Cookies, keine Analysetools und bindet keine externen Schriftarten oder Skripte ein.</p>
-        
-        <h4>4. Kontaktaufnahme</h4>
-        <p>Wenn Sie per E-Mail Kontakt aufnehmen, werden Ihre Angaben zwecks Bearbeitung der Anfrage bei uns gespeichert und nicht ohne Ihre Einwilligung weitergegeben.</p>
-        
-        <button onclick="document.getElementById('privacy-modal').close()">schließen</button>
-    </dialog>
-
-    <!-- Lokales Skript zur Automatisierung des aktuellen Jahres (100% datenschutzkonform) -->
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
-
-</body>
-</html>
+Verwende Code mit Vorsicht.Beim Aufruf dieser Webseite erfasst GitHub automatisch Informationen in sogenannten Server-Log-Files (u.a. Ihre IP-Adresse, Browsertyp, Betriebssystem und Uhrzeit). Dies ist technisch erforderlich, um die Seite stabil und sicher bereitzustellen (Art. 6 Abs. 1 lit. f DSGVO). Die Datenübertragung in die USA ist über die EU-Standardvertragsklauseln datenschutzrechtlich abgesichert.3. Cookies & TrackingDiese Webseite ist privat. Sie verwendet keine eigenen Cookies, keine Analysetools und bindet keine externen Schriftarten oder Skripte ein.4. KontaktaufnahmeWenn Sie per E-Mail Kontakt aufnehmen, werden Ihre Angaben zwecks Bearbeitung der Anfrage bei uns gespeichert und nicht ohne Ihre Einwilligung weitergegeben.schließendocument.getElementById('year').textContent = new Date().getFullYear();
