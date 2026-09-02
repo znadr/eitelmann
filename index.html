@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -11,7 +12,7 @@
             --text-main: #ffffff;   
             --text-muted: #aaaaaa;  
             --accent-blue: #3498db; 
-            --accent-red: #e74c3c;  /* Typisches Bauhaus-Rot */
+            --accent-red: #e74c3c;  
             --grid-color: #383838;  
             --grid-size: 40px;      
         }
@@ -23,7 +24,7 @@
         }
 
         body {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
             background-color: var(--bg-color);
             color: var(--text-main);
             min-height: 100vh;
@@ -36,14 +37,11 @@
             overflow-x: hidden;
         }
 
-        /* Das präzise Hintergrund-Gitter */
+        /* Hintergrund-Gitter */
         body::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-image: 
                 linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
                 linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
@@ -52,7 +50,7 @@
             pointer-events: none;
         }
 
-        /* Vertikale Konstruktionslinie auf der linken Rasterachse */
+        /* Vertikale Konstruktionslinie */
         body::after {
             content: "";
             position: absolute;
@@ -65,18 +63,17 @@
             pointer-events: none;
         }
 
-        /* Rotes Bauhaus-Quadrat: Exakt um ein Raster (var(--grid-size)) nach links verschoben */
+        /* Rotes Bauhaus-Quadrat */
         .bauhaus-cube {
             position: absolute;
-            top: calc(var(--grid-size) * 3); /* Gleiche Startlinie wie das Logo */
-            right: calc(var(--grid-size) * 3); /* Von *2 auf *3 erhöht -> wandert ein Raster nach links */
+            top: calc(var(--grid-size) * 3); 
+            right: calc(var(--grid-size) * 3); 
             width: calc(var(--grid-size) * 2);  
             height: calc(var(--grid-size) * 2); 
             background-color: var(--accent-red);
             z-index: 2;
         }
 
-        /* Alle Inhaltsblöcke halten exakt ein Raster Abstand zur Linie */
         header, main, footer {
             position: relative;
             z-index: 2;
@@ -84,7 +81,6 @@
             margin-left: var(--grid-size); 
         }
 
-        /* Header */
         header {
             margin-top: calc(var(--grid-size) * 3);
             height: calc(var(--grid-size) * 2); 
@@ -105,7 +101,6 @@
             text-shadow: 0 0 15px rgba(52, 152, 219, 0.35); 
         }
 
-        /* Hauptinhalt / Kontaktbereich */
         main {
             margin-top: auto; 
             margin-bottom: calc(var(--grid-size) * 3.5); 
@@ -155,7 +150,6 @@
             background: var(--accent-red);
         }
 
-        /* Footer mit Trennlinie */
         footer {
             border-top: 1px solid var(--text-main); 
             height: var(--grid-size);
@@ -187,7 +181,7 @@
             background: var(--text-main);
         }
 
-        /* STYLING FÜR DAS DATENSCHUTZ-FENSTER */
+        /* DATENSCHUTZ-MODAL */
         dialog {
             margin: auto;
             padding: 30px;
@@ -217,15 +211,11 @@
             color: var(--accent-blue);
         }
 
-        dialog p, dialog ul {
+        dialog p {
             font-size: 0.95rem;
             color: #dddddd;
             line-height: 1.5;
             margin-bottom: 10px;
-        }
-
-        dialog ul {
-            padding-left: 20px;
         }
 
         dialog button {
@@ -245,52 +235,23 @@
         }
 
         @media (max-width: 768px) {
-            :root {
-                --grid-size: 30px; 
-            }
-
-            body {
-                padding-left: var(--grid-size);
-                padding-right: var(--grid-size);
-            }
-
-            body::after {
-                left: var(--grid-size);
-            }
-
-            .bauhaus-cube {
-                top: calc(var(--grid-size) * 3);
-                right: calc(var(--grid-size) * 2); /* Mobil leicht angepasst für kleine Displays */
-                width: calc(var(--grid-size) * 2);
-                height: calc(var(--grid-size) * 2);
-            }
-
-            header, main, footer {
-                width: calc(100% - var(--grid-size));
-                margin-left: var(--grid-size);
-            }
-
-            .logo {
-                font-size: 3.6rem; 
-                letter-spacing: 2px; 
-                margin-left: -1px;
-                line-height: calc(var(--grid-size) * 2);
-            }
-
+            :root { --grid-size: 30px; }
+            body { padding-left: var(--grid-size); padding-right: var(--grid-size); }
+            body::after { left: var(--grid-size); }
+            .bauhaus-cube { top: calc(var(--grid-size) * 3); right: calc(var(--grid-size) * 2); }
+            header, main, footer { width: calc(100% - var(--grid-size)); margin-left: var(--grid-size); }
+            .logo { font-size: 3.6rem; letter-spacing: 2px; line-height: calc(var(--grid-size) * 2); }
             h2 { font-size: 1rem; }
             .subtext { font-size: 1.05rem; }
             .email { font-size: 1rem; }
-            
-            dialog {
-                width: 90%;
-                padding: 20px;
-            }
+            dialog { width: 90%; padding: 20px; }
         }
     </style>
 </head>
+
 <body>
 
-    <!-- Das verschobene Highlight im Bauhaus-Stil -->
+    <!-- Das rote Highlight -->
     <div class="bauhaus-cube"></div>
 
     <header>
@@ -310,12 +271,13 @@
     </main>
 
     <footer>
-        <div class="copyright">eitelmann.de &copy; <span id="year"></span></div>
+        <div class="copyright">eitelmann.de &copy; <span id="year">2026</span></div>
         <div class="legal-links">
             <a onclick="document.getElementById('privacy-modal').showModal()">datenschutz</a>
         </div>
     </footer>
 
+    <!-- Datenschutzerklärung -->
     <dialog id="privacy-modal">
         <h3>datenschutzerklärung</h3>
         
@@ -324,4 +286,23 @@
         
         <h4>2. Hosting und Server-Log-Files</h4>
         <p>Diese Webseite wird extern gehostet bei: <strong>GitHub Pages</strong> (GitHub Inc., 88 Colin P. Kelly Jr. St, San Francisco, CA 94107, USA).</p>
-Verwende Code mit Vorsicht.Beim Aufruf dieser Webseite erfasst GitHub automatisch Informationen in sogenannten Server-Log-Files (u.a. Ihre IP-Adresse, Browsertyp, Betriebssystem und Uhrzeit). Dies ist technisch erforderlich, um die Seite stabil und sicher bereitzustellen (Art. 6 Abs. 1 lit. f DSGVO). Die Datenübertragung in die USA ist über die EU-Standardvertragsklauseln datenschutzrechtlich abgesichert.3. Cookies & TrackingDiese Webseite ist privat. Sie verwendet keine eigenen Cookies, keine Analysetools und bindet keine externen Schriftarten oder Skripte ein.4. KontaktaufnahmeWenn Sie per E-Mail Kontakt aufnehmen, werden Ihre Angaben zwecks Bearbeitung der Anfrage bei uns gespeichert und nicht ohne Ihre Einwilligung weitergegeben.schließendocument.getElementById('year').textContent = new Date().getFullYear();
+        <p>Beim Aufruf dieser Webseite erfasst GitHub automatisch Informationen in sogenannten Server-Log-Files (u.a. Ihre IP-Adresse, Browsertyp, Betriebssystem und Uhrzeit). Dies ist technisch erforderlich, um die Seite stabil und sicher bereitzustellen (Art. 6 Abs. 1 lit. f DSGVO). Die Datenübertragung in die USA ist über die EU-Standardvertragsklauseln datenschutzrechtlich abgesichert.</p>
+        
+        <h4>3. Cookies & Tracking</h4>
+        <p>Diese Webseite ist privat. Sie verwendet keine eigenen Cookies, keine Analysetools und bindet keine externen Schriftarten oder Skripte ein.</p>
+        
+        <h4>4. Kontaktaufnahme</h4>
+        <p>Wenn Sie per E-Mail Kontakt aufnehmen, werden Ihre Angaben zwecks Bearbeitung der Anfrage bei uns gespeichert und nicht ohne Ihre Einwilligung weitergegeben.</p>
+        
+        <button onclick="document.getElementById('privacy-modal').close()">schließen</button>
+    </dialog>
+
+    <!-- Direktes Skript für das Jahr -->
+    <script>
+        const yearEl = document.getElementById('year');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+    </script>
+</body>
+</html>
